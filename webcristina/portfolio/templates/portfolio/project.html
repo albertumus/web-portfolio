@@ -1,0 +1,118 @@
+{% extends "core/base.html" %}
+{% load home_extras %}
+{% get_personalizacion as personalizacion %}
+{% block title %}{{project.title}}{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+
+<section class="bg-dark text-white"  style="border-bottom:5px solid;border-color:#0fddb0">
+
+ <!-- Page Content -->
+
+ 
+  <div class="container">
+
+        <a href="{% url 'home' %}" style="font-size:10px;font-family:Roboto">
+          <i class="fa fa-2x fa-long-arrow-left" style="color:white"> <span>Return</span></i></a>
+
+          
+        <!-- Portfolio Item Heading -->
+        <h1 class="my-4">{{project.title}}
+          {% for category in project.categories.all %}<small>{{category.name}} {% if not forloop.last %}· {% endif %}</small>{% endfor %}
+        </h1>
+  
+        <!-- Portfolio Item Row -->
+        <hr style=" max-width: 5000px;
+        border-width: 3px;
+        border-color: #0fddb0;
+        padding-bottom:20px">
+
+        <div class="row">
+  
+          <div class="col-md-8">
+              <iframe width="90%" height="90%" allowfullscreen style="border-radius:20px;border:5px"
+              src="https://www.youtube.com/embed/{{project.video_id}}">
+              </iframe> 
+          </div>
+          
+  
+          <div class="col-md-4" style="background-color: #0fddb0;
+          border-radius: 10px;
+          box-shadow: 0px 7px 20px #000;
+          padding-bottom: 20px;">
+            <h3 class="my-3">Project Description</h3>
+            <p style="font-size:17px">{{project.description}}</p>
+            <h3 class="my-3">Project Details</h3>
+
+              {% if project.detail_date %}
+                <div class="row" style="font-family:'Roboto';font-size:20px;padding-left:20px">
+                <i class="fa fa-1x fa-calendar" style="color:white;padding-right:10px"></i>  {{project.detail_date}}</div>{% endif %}
+              {% if project.detail_lugar %}  
+                <div class="row" style="font-family:'Roboto';font-size:20px;padding-left:20px">
+                <i class="fa fa-1x fa-map-marker" style="color:white;padding-right:17px"></i>  {{project.detail_lugar}}</div>{% endif %}
+              {% if project.detail_productora %}  
+                <div class="row" style="font-family:'Roboto';font-size:20px;padding-left:20px">
+                <i class="fa fa-1x fa-briefcase" style="color:white;padding-right:10px"></i>  {{project.detail_productora}}</div>{% endif %}
+              {% if project.detail_cliente %} 
+                <div class="row" style="font-family:'Roboto';font-size:20px;padding-left:20px">
+                <i class="fa fa-1x fa-users" style="color:white;padding-right:10px"></i>  {{project.detail_cliente}}</div>{% endif %}
+              {% if project.detail_software %}
+                <div class="row" style="font-family:'Roboto';font-size:20px;padding-left:20px">
+                <i class="fa fa-1x fa-laptop" style="color:white;padding-right:10px"></i>  {{project.detail_software}}</div>{% endif %}
+          </div>
+  
+        </div>
+
+        </div>
+
+    </section>
+        <!-- /.row -->
+  
+        <!-- Related Projects Row -->
+
+        <div class="container">
+
+        <h3 class="my-4">Related Projects</h3>
+  
+        <div class="row">
+
+            {% load projects_extras %}
+
+            {% get_last_projects as last_projects_list %}
+
+          {% for projects in last_projects_list %}
+            {% if projects.title != project.title %}
+            <div class="col-md-3 col-sm-6 mb-4">
+              <a class="portfolio-box" href="{% url 'project' projects.id %}">
+                <img class="img-fluid" style="border-radius:10px" src="{{projects.image.url}}" alt="">
+                <div class="portfolio-box-caption">
+                    <div class="portfolio-box-caption-content">
+                      {% for category in projects.categories.all %}
+                      <div class="project-category text-faded">
+                        {{category.name}}
+                      </div>
+                      {% endfor %}
+                      <div class="project-name">
+                        {{projects.title}}
+                      </div>
+                    </div>
+                  </div>
+              </a>
+            </div>
+              {% endif %}
+            {% endfor %}
+    
+  
+        </div>
+        <!-- /.row -->
+  
+      </div>
+
+      <br></br>
+      <!-- /.container -->
+    
+
+      {% endblock %}

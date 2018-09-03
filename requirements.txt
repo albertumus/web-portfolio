@@ -1,0 +1,4 @@
+django==2.0.5
+django-ckeditor==5.4.0
+pillow==5.1.0
+

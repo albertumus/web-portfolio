@@ -1,0 +1,244 @@
+{% extends "core/base.html" %}
+{% block title %}Home{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<!--
+{% load home_extras %}
+{% get_personalizacion as personalizacion %}
+-->
+
+{% for personalizacion in personalizacion %}
+
+<!-- Header -->
+
+    <header class="masthead text-center text-white d-flex">
+      <div class="container my-auto">
+        <div class="row">
+          <div class="col-lg-10 mx-auto">
+            <h1 class="text-uppercase">
+              <strong>{{personalizacion.title_header}}</strong>
+            </h1>
+            <hr>
+          </div>
+          <div class="col-lg-8 mx-auto">
+            <p class="text-faded mb-5" style="font-size:30px">{{personalizacion.subtitle_header}}</p>
+            <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">{{personalizacion.button}}</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+    <section class="bg-primary" id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center">
+            <h2 class="section-heading text-white">We've got what you need!</h2>
+            <hr class="light my-4">
+            <p class="text-faded mb-4">Start Bootstrap has everything you need to get your new website up and running in no time! All of the templates and themes on Start Bootstrap are open source, free to download, and easy to use. No strings attached!</p>
+            <a class="btn btn-light btn-xl js-scroll-trigger" href="#services">Get Started!</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <!-- Servicio -->
+
+    <section id="services">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading">{{personalizacion.title_service}}</h2>
+            <hr class="my-4">
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+
+        {% for servicio in servicios %}
+
+          <div class="col-lg-3 col-md-6 text-center">
+            <div class="service-box mt-5 mx-auto">
+              <i class="fa fa-4x {{servicio.icon}} text-primary mb-3 sr-icons"></i>
+              <h3 class="mb-3">{{servicio.title}}</h3>
+              <p class="text-muted mb-0">{{servicio.text}}</p>
+            </div>
+          </div>
+
+        {% endfor %}
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <!-- Portfolio -->
+
+
+    <section class="p-0" id="portfolio">
+      <div class="container-fluid p-0">
+        <div class="row no-gutters">
+
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">{{personalizacion.title_portfolio}}</h2>
+                <hr class="my-4" style="padding-bottom:35px">
+              </div>
+          
+  {% load projects_extras %}
+  {% get_project_list as project_list %}
+
+      {% for project in project_list %}
+      
+      <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="{% url 'project' project.id %}">
+            <img class="img-fluid" src="{{project.image.url}}" alt="">
+            <div class="portfolio-box-caption">
+              <div class="portfolio-box-caption-content">
+                {% for category in project.categories.all %}
+                <div class="project-category text-faded">
+                  {{category.name}}
+                </div>
+                {% endfor %}
+                <div class="project-name">
+                  {{project.title}}
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+
+        </div>
+      </div>
+    </section>
+    
+    <!-- Descargar CV -->
+
+    <section class="bg-dark text-white">
+      <div class="container text-center">
+        <h2 class="mb-4">{{personalizacion.title_cv}}</h2>
+        <a class="btn btn-light btn-xl sr-button" href="{{personalizacion.url}}">Download Now!</a>
+      </div>
+    </section>
+
+      <!-- Slider del Blog -->
+
+      <section  id="blog">
+        <div class="container-fluid p-0">
+          <div class="row no-gutters">
+  
+              <div class="col-lg-12 text-center">
+                  <h2 class="section-heading">{{personalizacion.title_blog}}</h2>
+                  <hr class="my-4" style="padding-bottom:35px">
+                </div>
+            
+    {% load blog_extras %}
+    {% get_last_entradas_de_blog as last_entradas_de_blog %}
+  
+        {% for entrada in last_entradas_de_blog|slice:':3' %}
+        
+        <div class="col-lg-3 col-sm-6" style="padding-left:10px">
+            <a class="blog-box" href="{% url 'entrada de blog' entrada.id entrada.title|slugify %}">
+              <img class="img-fluid" src="{{entrada.image.url}}" alt="">
+              <div class="blog-box-caption">
+                <div class="blog-box-caption-content">
+                  {% for category in entrada.categories.all %}
+                  <div class="project-category text-faded">
+                    {{category.name}}
+                  </div>
+                  {% endfor %}
+                  <div class="project-name">
+                    {{entrada.title}}
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+
+        <div class="col-lg-3 col-sm-6" style="padding-left:10px">
+          <a class="blog-box" href="{% url 'blog' %}">
+            <img class="img-fluid" src="/media/blog/intro.jpg" alt="">
+            <br><p class="text-center"></p>
+            <div class="blog-box-caption">
+              <div class="blog-box-caption-content">
+                <div class="project-category text-faded">
+                </div>
+                <div class="project-name">
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>    
+  
+          </div>
+        </div>
+      </section>    
+
+    
+    <!-- Contacto -->
+    
+    <section class="p-0" id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center">
+            <h2 class="section-heading">{{personalizacion.title_contact}}</h2>
+            <hr class="my-4">
+            <p class="mb-5">{{personalizacion.text_contact}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 ml-auto text-center">
+            <i class="fa fa-phone fa-3x mb-3 sr-contact"></i>
+            <p>{{personalizacion.phone}}</p>
+          </div>
+          <div class="col-lg-4 mr-auto text-center">
+            <i class="fa fa-envelope-o fa-3x mb-3 sr-contact"></i>
+            <p>
+              <a href="mailto:{{personalizacion.email}}">{{personalizacion.email}}</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulario de Contacto-->
+
+      <div class="container col-lg-6 d-flex justify-content-center align-items-center">
+        <div class="row">
+        <br>
+        {% if "ok" in request.GET %}
+          <p><b>Mensaje enviado correctamente. Gracias.</b></p>
+        {% endif %}
+          <form action="" method="POST" style="justify-content:center">
+              {% csrf_token %}
+              <div class="form-group ">
+                  <label style="font-family:Roboto">Name</label>
+                  {{form.name}}
+                </div>
+                {{form.name.errors}}
+              <div class="form-group" style="justify-content:center">
+                <label style="font-family:Roboto">Email</label>
+                {{form.email}}
+              </div>
+              {{form.email.errors}}
+              <div class="form-group">
+                  <label style="font-family:Roboto">Message</label>
+                  {{form.comment}}
+                </div>
+                {{form.comment.errors}}
+              <button value="Enviar" type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+      </div>
+
+    </section>
+
+    <br><br>
+
+    {% endfor %}
+
+    {% endblock %}

@@ -1,0 +1,71 @@
+{% extends "core/base.html" %} {% block title %}My Blog{% endblock %} {% load static %} {% block content %}
+
+<section class="bg-dark">
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Page Heading -->
+        <h1 style="color:#fff" class="my-4">Welcome to my blog!
+            <small>Enjoy & Share!</small>
+        </h1>
+
+
+                <form method="GET" action="">
+                    <input class="col-lg-3" type="text" name="q" placeholder="Search a post" value="{{request.GET.q}}">
+                    <button type="submit" value="Search" class="btn btn-primary">Search</button>
+                </form>
+
+
+        <!--{% load blog_extras %} {% get_entradas_de_blog as entradas_de_blog %}-->
+
+
+        <div class="row">
+
+            {% if request.GET.q == null or request.GET.q == "" %}
+
+            {% for entrada in entradas_de_blog %}
+            <div style="padding-top:20px" class="col-lg-4 col-sm-6 portfolio-item">
+                <div class="card h-100">
+                    <a href="{% url 'entrada de blog' entrada.id entrada.title|slugify %}">
+                        <img class="card-img-top" src="{{entrada.image.url}}" alt="">
+                    </a>
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a href="{% url 'entrada de blog' entrada.id entrada.title|slugify %}">{{entrada.title}}</a>
+                        </h4>
+                        <p class="card-text truncatechars" style="color:aqua;font-size:4px">{{entrada.content | truncatechars:150 | safe}}</p>
+                        <a style="font-family:Roboto" href="{% url 'entrada de blog' entrada.id entrada.title|slugify %}">[Read More]</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% endif %}
+            
+            {% if request.GET.q %}
+
+                {% for entrada in entradas_de_blog_filtradas %}
+                <div style="padding-top:20px" class="col-lg-4 col-sm-6 portfolio-item">
+                    <div class="card h-100">
+                        <a href="{% url 'entrada de blog' entrada.id entrada.title|slugify %}">
+                            <img class="card-img-top" src="{{entrada.image.url}}" alt="">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="{% url 'entrada de blog' entrada.id entrada.title|slugify %}">{{entrada.title}}</a>
+                            </h4>
+                            <p class="card-text truncatechars" style="color:aqua;font-size:4px">{{entrada.content | truncatechars:150 | safe}}</p>
+                            <a style="font-family:Roboto" href="{% url 'entrada de blog' entrada.id entrada.title|slugify %}">[Read More]</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+{% endblock %}

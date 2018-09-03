@@ -1,0 +1,44 @@
+{% extends "core/base.html" %}
+{% block title %}{{category.title}}{% endblock %}
+
+
+{% load static %}
+
+{% block content %}
+
+<section class="bg-dark">
+        <!-- Page Content -->
+        <div class="container">
+    
+            <!-- Page Heading -->
+            <h1 style="color:#fff" class="my-4">Welcome to {{category.title}}!
+                <small>Enjoy & Share!</small>
+            </h1>
+    
+    
+            <div class="row">
+                    {% for blog in category.get_blogs.all %}
+                <div style="padding-top:20px" class="col-lg-4 col-sm-6 portfolio-item">
+                    <div class="card h-100">
+                        <a href="#">
+                            <img class="card-img-top" src="{{blog.image.url}}" alt="">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="{% url 'entrada de blog' blog.id blog.title|slugify %}">{{blog.title}}</a>
+                            </h4>
+                            <p class="card-text" style="color:#000">{{blog.content | truncatechars:150 | safe}}</p>
+                            <a style="font-family:Roboto" href="{% url 'entrada de blog' blog.id blog.title|slugify %}">[Read More]</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- /.row -->
+    
+        </div>
+        <!-- /.container -->
+    </section>
+
+{% endblock %}
+

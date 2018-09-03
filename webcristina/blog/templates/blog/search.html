@@ -1,0 +1,38 @@
+{% extends "core/base.html" %} {% block title %}My Blog{% endblock %} {% load static %} {% block content %}
+
+<section class="bg-dark">
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Page Heading -->
+        <h1 style="color:#fff" class="my-4">Welcome to my blog!
+            <small>Enjoy & Share!</small>
+        </h1>
+
+        {% load blog_extras %} {% get_entradas_de_blog as entradas_de_blog %}
+
+
+        <div class="row">
+            {% for entrada_de_blog in entradas_de_blog %}
+            <div style="padding-top:20px" class="col-lg-4 col-sm-6 portfolio-item">
+                <div class="card h-100">
+                    <a href="#">
+                        <img class="card-img-top" src="{{entrada_de_blog.image.url}}" alt="">
+                    </a>
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a href="{% url 'entrada de blog' entrada_de_blog.id entrada_de_blog.title|slugify %}">{{entrada_de_blog.title}}</a>
+                        </h4>
+                        <p class="card-text truncatechars">{{entrada_de_blog.content | truncatechars:250 | safe}}</p>
+                        <a style="font-family:Roboto" href="{% url 'entrada de blog' entrada_de_blog.id entrada_de_blog.title|slugify %}">[Read More]</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+</section>
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends "core/base.html" %}
+
+{% load blog_extras %}
+{% get_entradas_de_blog as entradas_de_blog %}
+
+{% block title %}{{entrada_de_blog.title}}{% endblock %}
+{% load static %}
+{% block content %}
+  
+
+
+
+<!-- Page Section -->
+<section class="bg-dark">    
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-8">
+
+
+
+          <!-- Title -->
+          <h1 class="mt-4 text-white">{{entrada_de_blog.title}}</h1>
+
+          <!-- Author -->
+          <p class="lead text-white">
+            por
+            <a href="#">Cristina Blanco</a>
+          </p>
+
+
+
+          <!-- Date/Time -->
+          <p style="font-size:100%" class="text-white">Fecha de publicación: {{entrada_de_blog.created|date:'d-m-Y'}}</p>
+
+
+
+          <!-- Preview Image -->
+          <img class="img-fluid rounded mb-5" src="{{entrada_de_blog.image.url}}" alt="">
+
+          <hr style="padding-bottom:20px">
+
+          <!-- Post Content -->
+          <div class="container container-post border-entrada" style="background-color:#fff;padding-top:1px">
+            <p style="color:#fff;text-align:center" class="lead mt-5 content">{{entrada_de_blog.content|safe}}</p>
+          </div>
+
+          
+  
+         
+        </div>
+
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+          <!-- Categories Widget -->
+          <div class="card my-4">
+            <h5 class="card-header">CATEGORIES</h5>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-12 text-center">
+                  <div class="row text-center">
+                      {% for category in entrada_de_blog.categories.all %}
+                      <div class="col-sm-6 mx-auto"><a href="{% url 'categoria de blog' category.id %}">{{category}}</a></div>
+                      {% endfor %}
+                  </div>
+                  <!--
+                  <ul class="list-unstyled mb-0">
+                    {% for category in entrada_de_blog.categories.all %}
+                    <li>
+                      <a href="#">{{category}}</a>
+                      </li>
+                      {% endfor %}
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled mb-0">
+                    <li>
+                      <a href="#">JavaScript</a>
+                    </li>
+                    <li>
+                      <a href="#">CSS</a>
+                    </li>
+                    <li>
+                      <a href="#">Tutorials</a>
+                    </li>
+                  </ul>-->
+                </div>
+              </div>
+            </div>
+          </div>
+
+                  <!-- Recent Post Widget -->
+                  <div class="card my-4">
+                    <h5 class="card-header">RECENT POST</h5>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-lg-12 text-center">
+                          <div class="row text-center">
+                            {% load blog_extras %} {% get_last_entradas_de_blog as last_entradas_de_blog %}
+
+                            {% for entrada_de_blog_url in last_entradas_de_blog|slice:':6' %}
+                              {% if entrada_de_blog_url.title != entrada_de_blog.title %}
+                              <div style="padding-top:20px" class="mx-auto"><a href="{% url 'entrada de blog' entrada_de_blog_url.id entrada_de_blog_url.title|slugify %}">{{entrada_de_blog_url.title}}</a></div>
+                              {% endif %}
+                              {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+        </div>
+
+      </div>
+      <!-- /.row -->
+
+
+    </div>
+    <!-- /.container -->
+
+ 
+
+  {% endblock %}
